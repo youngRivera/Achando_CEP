@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qual a rua?</title>
+    <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+ <!--Importando Script Jquery-->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+<!--Formulário-->
+<div class="container">
+	<div class="row">
+			<h1>Ache o Endereço</h1>
+	</div>
+	<div class="row">
+			<h4 style="text-align:center">"Casa não encontrada? Nunk mais"</h4>
+	</div>
+    <div class="row input-container">
+        <form id="formulario">
+        <div class="col-xs-12">
+            <div class="styled-input wide">
+                    <legend>'</legend>
+                        <label for="cep">CEP</label>
+                <input id="cep" type="text" required placeholder="Clique fora de qualquer campo para executar a busca"/>
+             </div>
+        </div>
+                
+        <div class="col-md-6 col-sm-12">
+             <div class="styled-input">
+                <legend>'</legend>
+                  <label for="logradouro">Logradouro</label>
+                     <input id="logradouro" type="text" requiredplaceholder="a"/>
+                 </div>
+            </div>
+
+        <div class="col-md-6 col-sm-12">
+            <div class="styled-input">
+                <legend>'</legend>
+                <label for="numero">Número</label>
+                <input id="numero" type="text" />
+            </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+            <div class="styled-input">
+                <legend>'</legend>
+                  <label for="complemento">Complemento</label>
+                  <input id="complemento" type="text"/>
+             </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+            <div class="styled-input">
+                <legend>'</legend>
+                <label for="bairro">Bairro</label>
+                <input id="bairro" type="text" required/>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-sm-12">
+            <div class="styled-input">
+                <legend>'</legend>
+                <label for="cidade">Cidade</label>
+                <input id="cidade" type="text" required=""/>
+            </div>
+         </div>
+         
+            <div class="col-md-6 col-sm-12">
+                <div class="styled-input">
+                     <label for="uf">Estado</label>
+                     <legend>'</legend>
+                     <input id="uf" type="text" required=""/>
+                        <!-- <select id="uf">
+                                <option value="S">Selecione</option>
+                                <option value="AC">Acre</option>
+                                <option value="AL">Alagoas</option>
+                                <option value="AP">Amapá</option>
+                                <option value="AM">Amazonas</option>
+                                <option value="BA">Bahia</option>
+                                <option value="CE">Ceará</option>
+                                <option value="DF">Distrito Federal</option>
+                                <option value="ES">Espírito Santo</option>
+                                <option value="GO">Goiás</option>
+                                <option value="MA">Maranhão</option>
+                                <option value="MT">Mato Grosso</option>
+                                <option value="MS">Mato Grosso do Sul</option>
+                                <option value="MG">Minas Gerais</option>
+                                <option value="PA">Pará</option>
+                                <option value="PB">Paraíba</option>
+                                <option value="PR">Paraná</option>
+                                <option value="PE">Pernambuco</option>
+                                <option value="PI">Piauí</option>
+                                <option value="RJ">Rio de Janeiro</option>
+                                <option value="RN">Rio Grande do Norte</option>
+                                <option value="RS">Rio Grande do Sul</option>
+                                <option value="RO">Rondônia</option>
+                                <option value="RR">Roraima</option>
+                                <option value="SC">Santa Catarina</option>
+                                <option value="SP">São Paulo</option>
+                                <option value="SE">Sergipe</option>
+                                <option value="TO">Tocantins</option>
+                            </select> -->
+                        </br>
+                     </div>
+                </div>
+           
+            <div class="col-xs-12">
+                <div class="btn-lrg submit-btn"><button type="reset">Ache outro Endereço</button></div>
+            </div>
+        </form>
+	</div>
+    
+ </div>
+
+
+
+<script type="text/javascript">
+	$("#cep").focusout(function(){
+		//Início do Comando AJAX
+		$.ajax({
+			//O campo URL diz o caminho de onde virá os dados
+			//É importante concatenar o valor digitado no CEP
+			url: 'https://viacep.com.br/ws/'+$(this).val()+'/json/unicode/',
+			//Aqui você deve preencher o tipo de dados que será lido,
+			//no caso, estamos lendo JSON.
+			dataType: 'json',
+			//SUCESS é referente a função que será executada caso
+			//ele consiga ler a fonte de dados com sucesso.
+			//O parâmetro dentro da função se refere ao nome da variável
+			//que você vai dar para ler esse objeto.
+			success: function(resposta){
+				//Agora basta definir os valores que você deseja preencher
+				//automaticamente nos campos acima.
+				$("#logradouro").val(resposta.logradouro);
+				$("#complemento").val(resposta.complemento);
+				$("#bairro").val(resposta.bairro);
+				$("#cidade").val(resposta.localidade);
+				$("#uf").val(resposta.uf);
+				$("#numero").val(resposta.numero);
+			}
+		});
+	});
+</script>
+</body>
+</html>
